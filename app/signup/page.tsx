@@ -154,6 +154,7 @@ const SignUp = () => {
                   color: 'whitesmoke'
                 },
               },
+              duration: 10000
             }}
             // containerStyle={{
             //   position: 'relative',

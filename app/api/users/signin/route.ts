@@ -1,8 +1,8 @@
 import { connect } from '@/dbConfig/dbconfig'
 import User from '@/models/users'
 import { NextRequest, NextResponse } from 'next/server'
-import jwt from 'jsonwebtoken'
-var bcrypt = require('bcryptjs')
+let jwt = require('jsonwebtoken')
+let bcrypt = require('bcryptjs')
 
 connect()
 
@@ -25,6 +25,15 @@ export const POST = async (request: NextRequest) => {
             return NextResponse.json({message: "Invalid email or password! Crosscheck and try again", status: 400})
         }
 
+        console.log(user.isVerified)
+
+        // validate verified user
+        if(!user.isVerified){
+            return NextResponse.json({message: "This user account is inactive! Check your email to verify your account and try again", status: 300})
+        }
+
+        
+
         // generate user token
         const userData = {
             id: user._id,
@@ -32,7 +41,7 @@ export const POST = async (request: NextRequest) => {
             email: user.email
         }
 
-        const userToken = await jwt.sign(userData, process.env.TOKEN_SECRET!, {expiresIn: "1d"})
+        const userToken = await jwt.sign(userData, process.env.TOKEN_SECRET!, {expiresIn: 5})
 
         const response = NextResponse.json({
             message: "Login Successful",

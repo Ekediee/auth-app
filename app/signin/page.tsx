@@ -33,6 +33,10 @@ const SignIn = () => {
           toast.error(response.data.message)
         }
 
+        if(response.data.status === 300){
+          toast.error(response.data.message)
+        }
+
         if(response.data.status === 500){
           toast.error(response.data.message)
         }
@@ -110,6 +114,7 @@ const SignIn = () => {
                   color: 'whitesmoke'
                 },
               },
+              duration: 10000
             }}
             // containerStyle={{
             //   position: 'relative',
